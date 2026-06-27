@@ -110,7 +110,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=None,
+    icon='markdown.ico' if sys.platform == 'win32' else 'markdown.png',
 )
 
 coll = COLLECT(
