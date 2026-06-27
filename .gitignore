@@ -1,0 +1,15 @@
+# PyInstaller output
+build/
+dist/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Microsoft markitdown repository (subclone, not part of this project)
+markitdown/
+
+# Temporary files
+*.tmp
+*.log

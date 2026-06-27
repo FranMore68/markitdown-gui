@@ -1,0 +1,8 @@
+markitdown[pdf,docx,xlsx,xls,pptx,outlook,audio-transcription]
+ftfy
+youtube-transcript-api==1.2.4
+# Nota: para convertir MP3/MP4 también hace falta ffmpeg instalado en el sistema:
+#   Windows: winget install ffmpeg
+#   Mac:     brew install ffmpeg
+# Los archivos WAV funcionan sin ffmpeg.
+# La transcripción de audio usa la API de Google (necesita internet).
