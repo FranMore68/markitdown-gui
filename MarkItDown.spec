@@ -11,20 +11,23 @@ SP_SYS = next(
 )
 
 def pkg(name, base=None):
-    """Return (src_dir, dest_inside_bundle) for a package's data folder."""
+    """Return (src_dir, dest_inside_bundle) or None if package not found."""
     if base is None:
         for sp in [SP, SP_SYS]:
             p = os.path.join(sp, name)
             if os.path.isdir(p):
                 base = sp
                 break
+    if base is None:
+        print(f"WARNING: package '{name}' not found in site-packages, skipping.")
+        return None
     return (os.path.join(base, name), name)
 
 a = Analysis(
     ['gui_app.py'],
     pathex=[],
     binaries=[],
-    datas=[
+    datas=[x for x in [
         pkg('magika'),       # ONNX model + config for file-type detection
         pkg('ftfy'),         # Unicode data files
         pkg('markitdown'),   # converters package
@@ -41,7 +44,7 @@ a = Analysis(
         pkg('pydub'),
         pkg('speech_recognition'),
         pkg('youtube_transcript_api'),
-    ],
+    ] if x is not None],
     hiddenimports=[
         # markitdown converters (auto-discovered at runtime)
         'markitdown.converters._pdf_converter',
