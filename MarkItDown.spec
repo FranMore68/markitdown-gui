@@ -5,7 +5,10 @@ from pathlib import Path
 # Locate site-packages where our dependencies live
 import site
 SP = site.getusersitepackages()   # user site-packages
-SP_SYS = next(p for p in site.getsitepackages() if 'site-packages' in p)
+SP_SYS = next(
+    (p for p in site.getsitepackages() if 'site-packages' in p or 'dist-packages' in p),
+    site.getusersitepackages()   # fallback para Ubuntu/Debian que usan dist-packages
+)
 
 def pkg(name, base=None):
     """Return (src_dir, dest_inside_bundle) for a package's data folder."""
