@@ -12,13 +12,15 @@ markitdown/
 ├── gui_app.py          ← la aplicación (único archivo a mantener)
 ├── requirements.txt    ← dependencias pip
 ├── MarkItDown.spec     ← configuración de PyInstaller para generar ejecutable
+├── markdown.icns       ← icono para Mac (.app)
+├── markdown.ico        ← icono para Windows (.exe)
+├── markdown.png        ← icono fuente (usado también en Linux)
 ├── HOWTO.md            ← este archivo
-├── dist/
-│   └── MarkItDown.exe  ← ejecutable Windows (generado, no copiar al USB)
+├── dist/               ← ejecutables generados (no subir al repo)
 └── build/              ← carpeta temporal de PyInstaller (ignorar)
 ```
 
-**Para el USB solo necesitas:** `gui_app.py`, `requirements.txt`, `MarkItDown.spec`, `HOWTO.md`
+**Archivos necesarios para compilar:** `gui_app.py`, `requirements.txt`, `MarkItDown.spec`, `markdown.icns`, `markdown.ico`, `markdown.png`, `HOWTO.md`
 El mismo `MarkItDown.spec` genera el ejecutable en Windows (`.exe`), Linux (binario) y Mac (`.app`).
 
 ---
@@ -38,16 +40,32 @@ Outlook (.msg)
   - Windows: descarga de https://python.org (tkinter incluido por defecto)
   - Mac: `brew install python-tk` o usar el instalador de python.org
 
-### Instalación de dependencias (una sola vez)
+### Windows — Instalación de dependencias (una sola vez)
 ```bash
 pip install -r requirements.txt
 ```
 
-Esto instala: `markitdown` (pdf, docx, xlsx, pptx) + `ftfy`
-
-### Lanzar la app
+### Lanzar la app (Windows)
 ```bash
 python gui_app.py
+```
+
+### Mac — Instalación de dependencias (una sola vez)
+
+En Mac con Python de Homebrew, `pip` está protegido y hay que usar un entorno virtual:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Lanzar la app (Mac)
+
+Cada vez que abras una terminal nueva, activa primero el entorno virtual:
+```bash
+source venv/bin/activate
+python3 gui_app.py
 ```
 
 ---
@@ -120,18 +138,22 @@ brew install python-tk
 ```
 O descargando el instalador oficial de https://python.org (incluye tkinter).
 
-#### 2. Instalar dependencias
+#### 2. Crear entorno virtual e instalar dependencias
+
+En Mac, `pip` está protegido por el sistema y requiere un entorno virtual:
 ```bash
-pip3 install -r requirements.txt
-pip3 install pyinstaller
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install pyinstaller
 ```
 
 #### 3. Compilar
 ```bash
-python3 -m PyInstaller MarkItDown.spec
+python -m PyInstaller MarkItDown.spec
 ```
 
-El resultado aparece en `dist/MarkItDown.app`.
+El resultado aparece en `dist/MarkItDown.app` (~28 MB).
 
 #### 4. Si Mac bloquea la app (Gatekeeper)
 La primera vez que abras la app, Mac puede mostrar "no se puede abrir porque es de un desarrollador no identificado".
@@ -139,7 +161,10 @@ Para solucionarlo, abre Terminal y ejecuta:
 ```bash
 xattr -cr dist/MarkItDown.app
 ```
+Luego haz doble clic en el `.app` normalmente.
 O ve a Ajustes del sistema → Privacidad y seguridad → y haz clic en "Abrir igualmente".
+
+> **Nota:** la carpeta `venv/` solo es necesaria para compilar. El `.app` generado funciona en cualquier Mac sin Python instalado.
 
 ---
 

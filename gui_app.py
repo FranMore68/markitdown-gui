@@ -261,6 +261,8 @@ class App:
             relief="flat",
             state="disabled",
             background="#fafafa",
+            foreground="#111111",
+            insertbackground="#111111",
         )
         self._preview.pack(fill="both", expand=True)
 

@@ -2,18 +2,32 @@
 import os, sys
 from pathlib import Path
 
-# Locate site-packages where our dependencies live
-import site
-SP = site.getusersitepackages()   # user site-packages
-SP_SYS = next(
-    (p for p in site.getsitepackages() if 'site-packages' in p or 'dist-packages' in p),
-    site.getusersitepackages()   # fallback para Ubuntu/Debian que usan dist-packages
-)
+# Locate site-packages — venv takes priority, then user, then system
+import site, sysconfig
+
+def _all_site_packages():
+    candidates = []
+    # venv site-packages (most important when compiling inside a venv)
+    venv_sp = sysconfig.get_path('purelib')
+    if venv_sp:
+        candidates.append(venv_sp)
+    try:
+        candidates.append(site.getusersitepackages())
+    except Exception:
+        pass
+    try:
+        candidates += [p for p in site.getsitepackages()
+                       if 'site-packages' in p or 'dist-packages' in p]
+    except Exception:
+        pass
+    return candidates
+
+_SP_LIST = _all_site_packages()
 
 def pkg(name, base=None):
     """Return (src_dir, dest_inside_bundle) or None if package not found."""
     if base is None:
-        for sp in [SP, SP_SYS]:
+        for sp in _SP_LIST:
             p = os.path.join(sp, name)
             if os.path.isdir(p):
                 base = sp
@@ -122,3 +136,17 @@ coll = COLLECT(
     upx_exclude=[],
     name='MarkItDown',       # output folder: dist/MarkItDown/
 )
+
+if sys.platform == 'darwin':
+    app = BUNDLE(
+        coll,
+        name='MarkItDown.app',
+        icon='markdown.icns',
+        bundle_identifier='com.markitdown.gui',
+        info_plist={
+            'NSHighResolutionCapable': True,
+            'CFBundleShortVersionString': '1.0.0',
+            'CFBundleName': 'MarkItDown',
+            'CFBundleDisplayName': 'MarkItDown',
+        },
+    )
