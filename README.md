@@ -1,50 +1,74 @@
 # MarkItDown GUI
 
-Aplicación de escritorio para convertir documentos a formato Markdown.  
-Basada en la librería [markitdown](https://github.com/microsoft/markitdown) de Microsoft.
+Desktop app to convert documents to Markdown — no Python required.  
+Built on Microsoft's [markitdown](https://github.com/microsoft/markitdown) library.
 
-## Descarga
+![MarkItDown GUI screenshot](screenshots/screenshot-mac.png)
 
-👉 [Descargar la última versión para Windows](../../releases/latest)
+---
 
-Descarga el archivo `MarkItDown-Windows.zip`, extráelo y ejecuta `MarkItDown.exe`.  
-No requiere instalar Python ni ninguna dependencia.
+## Download
 
-## Formatos soportados
+| Platform | Download |
+|---|---|
+| Windows 10/11 | [MarkItDown-Windows.zip](../../releases/latest) → extract and run `MarkItDown.exe` |
+| macOS (Apple Silicon & Intel) | [MarkItDown-Mac.zip](../../releases/latest) → extract, run `xattr -cr MarkItDown.app`, then open |
+| Linux | See [HOWTO.md](HOWTO.md) to compile from source |
 
-| Formato | Extensiones |
+---
+
+## Supported formats
+
+| Format | Extensions |
 |---|---|
 | PDF | `.pdf` |
 | Word | `.docx`, `.doc` |
 | Excel | `.xlsx`, `.xls` |
 | PowerPoint | `.pptx`, `.ppt` |
 | Web | `.html`, `.htm` |
-| Texto y datos | `.txt`, `.csv`, `.json`, `.xml` |
+| Text & data | `.txt`, `.csv`, `.json`, `.xml` |
 | E-book | `.epub` |
-| Imágenes | `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.tiff` |
+| Images | `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.tiff` |
 | Jupyter Notebook | `.ipynb` |
 | Outlook | `.msg` |
-| Audio WAV | `.wav` *(requiere internet, usa Google Speech)* |
-| Audio MP3/MP4 | `.mp3`, `.mp4` *(además requiere [ffmpeg](https://ffmpeg.org))* |
-| YouTube URL | URL de YouTube *(requiere internet)* |
+| Audio WAV | `.wav` *(requires internet, uses Google Speech)* |
+| Audio MP3/MP4 | `.mp3`, `.mp4` *(also requires [ffmpeg](https://ffmpeg.org))* |
+| YouTube URL | YouTube URL *(requires internet)* |
 
-## Uso
+---
 
-1. Selecciona un archivo con **Browse…** o pega una URL de YouTube
-2. Revisa la vista previa del Markdown generado
-3. Ajusta el nombre y carpeta de salida si lo necesitas
-4. Pulsa **Convert to Markdown**
+## How to use
 
-## Nota sobre Windows SmartScreen
+1. Select a file with **Browse…** or paste a YouTube URL
+2. Check the Markdown preview
+3. Adjust the output file name and folder if needed
+4. Click **Convert to Markdown**
 
-La primera vez que ejecutes la app, Windows puede mostrar un aviso de seguridad  
-porque el ejecutable no tiene firma digital.  
-Haz clic en **"Más información" → "Ejecutar de todas formas"** para continuar.
+---
 
-## Compilar desde el código fuente
+## Platform notes
 
-Ver [HOWTO.md](HOWTO.md) para instrucciones de compilación en Windows, Mac y Linux.
+### Windows
+The first time you run the app, Windows SmartScreen may show a security warning
+because the executable is not digitally signed.
+Click **"More info" → "Run anyway"** to continue.
 
-## Licencia
+### macOS
+macOS Gatekeeper may block the app on first launch. Open Terminal and run:
+```bash
+xattr -cr MarkItDown.app
+```
+Then double-click the app normally.
+Or go to System Settings → Privacy & Security → click "Open Anyway".
 
-MIT
+---
+
+## Build from source
+
+See [HOWTO.md](HOWTO.md) for full build instructions on Windows, Mac and Linux.
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE)
